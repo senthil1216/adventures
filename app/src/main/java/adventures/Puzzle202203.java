@@ -4,17 +4,6 @@ package adventures;
 import java.util.*;
 
 class Puzzle202203 {
-    private Map<Character, Integer> priority;
-
-    public Puzzle202203() {
-        String alphabets = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        char[] alpha = alphabets.toCharArray();
-        priority = new HashMap<>();
-        for (int i = 0; i < alpha.length; i++) {
-            priority.put(alpha[i], i + 1);
-        }
-    }
-
     public void part1() {
         List<String> data = Helpers.loadFile("20220301.txt");
         int out = 0;
@@ -24,7 +13,7 @@ class Puzzle202203 {
             String second = d.substring(d.length() / 2);
             for (Character c : first.toCharArray()) {
                 if (second.indexOf(c) >= 0 && !common.contains(c)) {
-                    out += priority.get(c);
+                    out += Character.isUpperCase(c) ? (int) c - 38 : (int) c - 96;
                     common.add(c);
                 }
             }
@@ -42,7 +31,7 @@ class Puzzle202203 {
             String third = data.get(i + 2);
             for (Character c : first.toCharArray()) {
                 if (second.indexOf(c) >= 0 && third.indexOf(c) >= 0 && !common.contains(c)) {
-                    out += priority.get(c);
+                    out += Character.isUpperCase(c) ? (int) c - 38 : (int) c - 96;
                     common.add(c);
                 }
             }
