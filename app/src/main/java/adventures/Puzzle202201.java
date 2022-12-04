@@ -8,7 +8,7 @@ import com.google.common.base.Strings;
 class Puzzle202201 {
 
     public void part1() {
-        List<String> data = Helpers.loadFile("20220101.txt");
+        List<String> data = Helpers.loadFile("202201.txt");
         int cal = 0;
         int maxCal = -1;
         for (String val : data) {
@@ -24,7 +24,7 @@ class Puzzle202201 {
     }
 
     public void part2() {
-        List<String> data = Helpers.loadFile("20220102.txt");
+        List<String> data = Helpers.loadFile("202201.txt");
         int cal = 0;
         List<Integer> calories = new ArrayList<>();
         for (String val : data) {

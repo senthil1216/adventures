@@ -6,7 +6,7 @@ import java.util.*;
 class Puzzle202202 {
 
     public void part1() {
-        List<String> data = Helpers.loadFile("20220201.txt");
+        List<String> data = Helpers.loadFile("202202.txt");
         Map<Character, Integer> cost = new HashMap<>();
         Set<String> wins = new HashSet<>();
         wins.add("C X");
@@ -41,7 +41,7 @@ class Puzzle202202 {
     }
 
     public void part2() {
-        List<String> data = Helpers.loadFile("20220201.txt");
+        List<String> data = Helpers.loadFile("202202.txt");
         Map<Character, Integer> cost = new HashMap<>();
         Map<Character, Character> wins = new HashMap<>();
         wins.put('C', 'X');

@@ -5,7 +5,7 @@ import java.util.*;
 
 class Puzzle202203 {
     public void part1() {
-        List<String> data = Helpers.loadFile("20220301.txt");
+        List<String> data = Helpers.loadFile("202203.txt");
         int out = 0;
         for (String d : data) {
             Set<Character> common = new HashSet<>();
@@ -22,7 +22,7 @@ class Puzzle202203 {
     }
 
     public void part2() {
-        List<String> data = Helpers.loadFile("20220302.txt");
+        List<String> data = Helpers.loadFile("202203.txt");
         int out = 0;
         for (int i = 0; i < data.size(); i += 3) {
             Set<Character> common = new HashSet<>();

@@ -5,7 +5,7 @@ import java.util.*;
 
 class Puzzle202101 {
     public void part1() {
-        List<String> data = Helpers.loadFile("20210101.txt");
+        List<String> data = Helpers.loadFile("202101.txt");
         int prev = Integer.parseInt(data.get(0));
         int maxValue = 0;
         int curr = 0;
@@ -21,7 +21,7 @@ class Puzzle202101 {
     }
 
     public void part2() {
-        List<String> data = Helpers.loadFile("20210101.txt");
+        List<String> data = Helpers.loadFile("202101.txt");
         int prevSum = 0;
         int count = 0;
         int currSum = 0;

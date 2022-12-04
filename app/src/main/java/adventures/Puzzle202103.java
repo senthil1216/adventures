@@ -3,9 +3,9 @@ package adventures;
 
 import java.util.*;
 
-class Puzzle202102 {
+class Puzzle202103 {
     public void part1() {
-        List<String> data = Helpers.loadFile("202102.txt");
+        List<String> data = Helpers.loadFile("202103.txt");
         int h = 0, v = 0;
         for (String d : data) {
             String[] dirsValues = d.split(" ");
@@ -23,7 +23,7 @@ class Puzzle202102 {
     }
 
     public void part2() {
-        List<String> data = Helpers.loadFile("202102.txt");
+        List<String> data = Helpers.loadFile("202103.txt");
         int h = 0, aim = 0, v = 0;
         for (String d : data) {
             String[] dirsValues = d.split(" ");
