@@ -1,4 +1,3 @@
-
 package adventures;
 
 import java.util.*;
