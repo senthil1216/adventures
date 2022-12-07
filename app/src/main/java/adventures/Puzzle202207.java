@@ -2,26 +2,27 @@ package adventures;
 
 import java.util.*;
 
-class Puzzle202207 {
-    class Files {
-        private List<Files> files;
-
-        public Files() {
-            files = new ArrayList<>();
-        }
-
-        public String name;
-        public boolean isFile;
-        public long size;
-
-        public void addFile(Files f) {
-            files.add(f);
-        }
-
-        public Files parentDir;
+class Files {
+    public Files() {
+        files = new ArrayList<>();
     }
 
-    public Map<String, Files> buildDirectoryStruct() {
+    public String name;
+    public boolean isFile;
+    public long size;
+    public List<Files> files;
+
+    public void addFile(Files f) {
+        files.add(f);
+    }
+
+    public Files parentDir;
+}
+
+
+class Puzzle202207 {
+
+    private Map<String, Files> buildDirectoryStruct() {
         List<String> data = Helpers.loadFile("202207.txt");
         Files root = new Files();
         root.name = "root";
@@ -30,19 +31,23 @@ class Puzzle202207 {
         Map<String, Files> fileStruct = new HashMap<>();
         fileStruct.put("root", root);
         for (String d : data) {
-            if (d.contains("$ cd")) { // .. change directory
-                if (d.equals("$ cd ..")) { // .. pop one directory above
+            if (d.contains("$ cd")) {
+                // .. change directory
+                if (d.equals("$ cd ..")) {
+                    // .. pop one directory above
                     currFile = currFile.parentDir;
                     continue;
-                } else if (d.equals("$ cd /")) {
+                } else if (d.equals("$ cd /")) { // .. go to root directory
                     continue;
                 } else {
+                    // .. go to a specific directory
                     String[] currFileName = d.split(" ");
                     currFile = fileStruct.get(currFile.name + "_" + currFileName[2]);
                 }
             } else if (d.equals("$ ls")) { // .. list directory
                 continue;
             } else {
+                // .. files inside the directory
                 String[] currFileName = d.split(" ");
                 Files newFile = new Files();
                 newFile.name = currFile.name + "_" + currFileName[1];
@@ -60,6 +65,18 @@ class Puzzle202207 {
         return fileStruct;
     }
 
+    private long calcSize(Map<String, Files> map, String name) {
+        long size = 0;
+        if (map.get(name).isFile) {
+            return map.get(name).size;
+        } else {
+            for (Files f : map.get(name).files) {
+                size += calcSize(map, f.name);
+            }
+        }
+        return size;
+    }
+
     public void part1() {
         Map<String, Files> fileStruct = buildDirectoryStruct();
         int totalSize = 0;
@@ -70,18 +87,6 @@ class Puzzle202207 {
             }
         }
         System.out.println(totalSize);
-    }
-
-    public long calcSize(Map<String, Files> map, String name) {
-        long size = 0;
-        if (map.get(name).isFile) {
-            return map.get(name).size;
-        } else {
-            for (Files f : map.get(name).files) {
-                size += calcSize(map, f.name);
-            }
-        }
-        return size;
     }
 
     public void part2() {
