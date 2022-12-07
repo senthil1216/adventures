@@ -41,6 +41,10 @@ public class App {
                 new Puzzle202206().part1();
                 new Puzzle202206().part2();
                 break;
+            case "202207":
+                new Puzzle202207().part1();
+                new Puzzle202207().part2();
+                break;
             default:
                 System.out.println("Not yet implemented");
                 break;
