@@ -1,7 +1,5 @@
 package adventures;
 
-import java.util.*;
-
 class Puzzle202208 {
     private final int GRID = 99;
 
