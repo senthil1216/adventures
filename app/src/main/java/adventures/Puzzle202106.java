@@ -1,0 +1,51 @@
+package adventures;
+
+import java.util.*;
+import java.util.stream.*;
+
+class Puzzle202106 {
+
+    public void part1() {
+        String[] data = Helpers.loadFileAsString("202106.txt").split(",");
+        int[] counterMap = new int[9];
+        for (int i = 0; i < data.length; i++) {
+            int currNum = Integer.parseInt(data[i].trim());
+            counterMap[currNum]++;
+        }
+        for (int d = 0; d < 80; d++) {
+            int newFishes = counterMap[0];
+            for (int i = 1; i < 9; i++) {
+                counterMap[i - 1] = counterMap[i];
+            }
+            counterMap[6] += newFishes;
+            counterMap[8] = newFishes;
+        }
+        int total = 0;
+        for (int i = 0; i < 9; i++) {
+            total += counterMap[i];
+        }
+        System.out.println(total);
+    }
+
+    public void part2() {
+        String[] data = Helpers.loadFileAsString("202106.txt").split(",");
+        long[] counterMap = new long[9];
+        for (int i = 0; i < data.length; i++) {
+            int currNum = Integer.parseInt(data[i].trim());
+            counterMap[currNum]++;
+        }
+        for (int d = 0; d < 256; d++) {
+            long newFishes = counterMap[0];
+            for (int i = 1; i < 9; i++) {
+                counterMap[i - 1] = counterMap[i];
+            }
+            counterMap[6] += newFishes;
+            counterMap[8] = newFishes;
+        }
+        long total = 0;
+        for (int i = 0; i < 9; i++) {
+            total += counterMap[i];
+        }
+        System.out.println(total);
+    }
+}
