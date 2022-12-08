@@ -129,6 +129,5 @@ class Puzzle202104 {
             }
         }
         System.out.println(totalScore);
-
     }
 }
