@@ -1,8 +1,5 @@
 package adventures;
 
-import java.util.*;
-import java.util.stream.*;
-
 class Puzzle202106 {
 
     public void part1() {
