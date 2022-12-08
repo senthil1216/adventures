@@ -17,6 +17,10 @@ public class App {
                 new Puzzle202103().part1();
                 new Puzzle202103().part2();
                 break;
+            case "202104":
+                new Puzzle202104().part1();
+                new Puzzle202104().part2();
+                break;
             case "202201":
                 new Puzzle202201().part1();
                 new Puzzle202201().part2();
