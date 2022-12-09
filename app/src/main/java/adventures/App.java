@@ -33,6 +33,10 @@ public class App {
                 new Puzzle202107().part1();
                 new Puzzle202107().part2();
                 break;
+            case "202108":
+                new Puzzle202108().part1();
+                new Puzzle202108().part2();
+                break;
             case "202201":
                 new Puzzle202201().part1();
                 new Puzzle202201().part2();
@@ -64,6 +68,10 @@ public class App {
             case "202208":
                 new Puzzle202208().part1();
                 new Puzzle202208().part2();
+                break;
+            case "202209":
+                new Puzzle202209().part1();
+                new Puzzle202209().part2();
                 break;
             default:
                 System.out.println("Not yet implemented");
