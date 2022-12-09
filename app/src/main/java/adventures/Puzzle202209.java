@@ -33,6 +33,12 @@ class Puzzle202209 {
 
         public int X;
         public int Y;
+
+        @Override
+        public int hashCode() {
+            String h = new String(this.X + " " + this.Y);
+            return h.hashCode();
+        }
     }
 
     private void solver(int sizeOfPairs) {
@@ -45,12 +51,12 @@ class Puzzle202209 {
             m.steps = steps;
             return m;
         }).collect(Collectors.toList());
-        Set<String> tailVisited = new HashSet<>();
-        tailVisited.add("0 0");
+        Set<Pair> tailVisited = new HashSet<>();
         List<Pair> pairs = new ArrayList<>();
         for (int i = 0; i < sizeOfPairs; i++) {
             pairs.add(new Pair(0, 0));
         }
+        tailVisited.add(pairs.get(sizeOfPairs - 1));
         for (Move m : moves) {
             for (int i = 0; i < m.steps; i++) {
                 Pair head = pairs.get(0);
@@ -78,7 +84,7 @@ class Puzzle202209 {
                     curr = m.moveOneStep(prev, curr);
                 }
                 Pair tail = pairs.get(pairs.size() - 1);
-                tailVisited.add("" + tail.X + " " + tail.Y);
+                tailVisited.add(tail);
             }
         }
         System.out.println(tailVisited.size());
