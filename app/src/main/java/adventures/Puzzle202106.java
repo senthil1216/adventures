@@ -1,6 +1,10 @@
 package adventures;
 
 class Puzzle202106 {
+    public static void main(String[] args) {
+        new Puzzle202106().part1();
+        new Puzzle202106().part2();
+    }
     private void findTotalNumFishes(int days) {
         String[] data = Helpers.loadFileAsString("202106.txt").split(",");
         long[] counterMap = new long[9];

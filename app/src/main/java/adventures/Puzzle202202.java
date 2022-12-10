@@ -4,6 +4,10 @@ import java.util.*;
 
 class Puzzle202202 {
 
+    public static void main(String[] args) {
+        new Puzzle202202().part1();
+        new Puzzle202202().part2();
+    }
     public void part1() {
         List<String> data = Helpers.loadFile("202202.txt");
         Map<Character, Integer> cost = new HashMap<>();

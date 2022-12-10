@@ -5,7 +5,10 @@ import java.util.stream.Collectors;
 import com.google.common.base.Strings;
 
 class Puzzle202108 {
-
+    public static void main(String[] args) {
+        new Puzzle202108().part1();
+        new Puzzle202108().part2();
+    }
     public void part1() {
         String[] data = Helpers.loadFileAsString("202108.txt").split("\n");
         int count = 0;

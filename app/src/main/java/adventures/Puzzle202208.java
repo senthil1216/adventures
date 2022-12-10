@@ -1,6 +1,11 @@
 package adventures;
 
 class Puzzle202208 {
+
+    public static void main(String[] args) {
+        new Puzzle202208().part1();
+        new Puzzle202208().part2();
+    }
     private final int GRID = 99;
 
     private boolean isTaller(int r, int c, int[][] grid) {

@@ -4,6 +4,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class Puzzle202103 {
+
+    public static void main(String[] args) {
+        new Puzzle202103().part1();
+        new Puzzle202103().part2();
+    }
     class Pair {
         public int CountOnes;
         public int CountZeroes;

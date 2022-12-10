@@ -6,7 +6,10 @@ import java.util.*;
 import com.google.common.base.Strings;
 
 class Puzzle202201 {
-
+    public static void main(String[] args) {
+        new Puzzle202201().part1();
+        new Puzzle202201().part2();
+    }
     public void part1() {
         List<String> data = Helpers.loadFile("202201.txt");
         int cal = 0;

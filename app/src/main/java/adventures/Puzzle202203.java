@@ -3,6 +3,10 @@ package adventures;
 import java.util.*;
 
 class Puzzle202203 {
+    public static void main(String[] args) {
+        new Puzzle202203().part1();
+        new Puzzle202203().part2();
+    }
     public void part1() {
         List<String> data = Helpers.loadFile("202203.txt");
         int out = 0;

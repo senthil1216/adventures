@@ -4,6 +4,11 @@ import java.util.*;
 import java.util.stream.*;
 
 class Puzzle202210 {
+
+    public static void main(String[] args) {
+        new Puzzle202210().part1();
+        new Puzzle202210().part2();
+    }
     private List<Integer> buildCycleValues() {
         String INPUT = Helpers.loadFileAsString("202210.txt");
         List<Integer> vals = new ArrayList<>();

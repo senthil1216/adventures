@@ -5,6 +5,10 @@ import java.util.stream.*;
 import com.google.common.base.Strings;
 
 class Puzzle202104 {
+    public static void main(String[] args) {
+        new Puzzle202104().part1();
+        new Puzzle202104().part2();
+    }
     class Grid {
         public Grid() {
             values = new ArrayList<>();

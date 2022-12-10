@@ -2,26 +2,29 @@ package adventures;
 
 import java.util.*;
 
-class Files {
-    public Files() {
-        files = new ArrayList<>();
-    }
-
-    public String name;
-    public boolean isFile;
-    public long size;
-    public List<Files> files;
-
-    public void addFile(Files f) {
-        files.add(f);
-    }
-
-    public Files parentDir;
-}
-
-
 class Puzzle202207 {
 
+    public static void main(String[] args) {
+        new Puzzle202207().part1();
+        new Puzzle202207().part2();
+    }
+
+    class Files {
+        public Files() {
+            files = new ArrayList<>();
+        }
+
+        public String name;
+        public boolean isFile;
+        public long size;
+        public List<Files> files;
+
+        public void addFile(Files f) {
+            files.add(f);
+        }
+
+        public Files parentDir;
+    }
     private Map<String, Files> buildDirectoryStruct() {
         List<String> data = Helpers.loadFile("202207.txt");
         Files root = new Files();

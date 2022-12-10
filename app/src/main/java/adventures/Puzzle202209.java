@@ -5,6 +5,11 @@ import java.util.stream.*;
 
 class Puzzle202209 {
 
+    public static void main(String[] args) {
+        new Puzzle202209().part1();
+        new Puzzle202209().part2();
+    }
+
     class Move {
         public String dir;
         public int steps;

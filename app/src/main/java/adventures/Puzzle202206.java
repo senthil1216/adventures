@@ -5,6 +5,10 @@ import java.util.stream.*;
 import com.google.common.primitives.Chars;
 
 class Puzzle202206 {
+    public static void main(String[] args) {
+        new Puzzle202206().part1();
+        new Puzzle202206().part2();
+    }
     public void part1() {
         String data = Helpers.loadFileAsString("202206.txt");
         int i = 0;

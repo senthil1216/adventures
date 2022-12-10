@@ -3,7 +3,10 @@ package adventures;
 import java.util.*;
 
 class Puzzle202107 {
-
+    public static void main(String[] args) {
+        new Puzzle202107().part1();
+        new Puzzle202107().part2();
+    }
     private int calcMinCost(int fuel, int pos) {
         return Math.abs(fuel - pos);
     }

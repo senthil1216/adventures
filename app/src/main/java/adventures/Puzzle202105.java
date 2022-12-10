@@ -1,7 +1,10 @@
 package adventures;
 
 class Puzzle202105 {
-
+    public static void main(String[] args) {
+        new Puzzle202105().part1();
+        new Puzzle202105().part2();
+    }
     private int calcTotalCount(int[][] grid, int minX, int maxX, int minY, int maxY) {
         int totalCount = 0;
         for (int y = minY; y <= maxY; y++) {

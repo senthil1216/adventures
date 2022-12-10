@@ -6,6 +6,10 @@ import com.google.common.primitives.Chars;
 import org.apache.commons.collections4.ListUtils;
 
 class Puzzle202205 {
+    public static void main(String[] args) {
+        new Puzzle202205().part1();
+        new Puzzle202205().part2();
+    }
     public void part1() {
         String data = Helpers.loadFileAsString("202205.txt");
         String[] values = data.split("\n\n");
