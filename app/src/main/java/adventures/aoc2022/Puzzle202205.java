@@ -1,6 +1,8 @@
-package adventures;
+package adventures.aoc2022;
 
 import java.util.*;
+
+import adventures.utils.Helpers;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Chars;
 import org.apache.commons.collections4.ListUtils;

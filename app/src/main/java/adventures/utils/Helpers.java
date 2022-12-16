@@ -1,4 +1,4 @@
-package adventures;
+package adventures.utils;
 
 import java.util.*;
 import java.io.*;

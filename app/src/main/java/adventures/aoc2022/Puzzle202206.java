@@ -1,7 +1,9 @@
-package adventures;
+package adventures.aoc2022;
 
 import java.util.*;
 import java.util.stream.*;
+
+import adventures.utils.Helpers;
 import com.google.common.primitives.Chars;
 
 class Puzzle202206 {

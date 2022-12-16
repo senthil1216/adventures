@@ -1,4 +1,6 @@
-package adventures;
+package adventures.aoc2021;
+
+import adventures.utils.Helpers;
 
 class Puzzle202106 {
     public static void main(String[] args) {

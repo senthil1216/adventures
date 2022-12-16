@@ -1,8 +1,9 @@
-package adventures;
+package adventures.aoc2021;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import com.google.common.base.Strings;
+
+import adventures.utils.Helpers;
 
 class Puzzle202110 {
     public static void main(String[] args) {

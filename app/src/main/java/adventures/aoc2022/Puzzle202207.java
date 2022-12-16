@@ -1,4 +1,6 @@
-package adventures;
+package adventures.aoc2022;
+
+import adventures.utils.Helpers;
 
 import java.util.*;
 

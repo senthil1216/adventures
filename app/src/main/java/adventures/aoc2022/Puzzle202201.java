@@ -1,10 +1,8 @@
-
-package adventures;
+package adventures.aoc2022;
 
 import java.util.*;
-
+import adventures.utils.Helpers;
 import com.google.common.base.Strings;
-
 class Puzzle202201 {
     public static void main(String[] args) {
         new Puzzle202201().part1();
