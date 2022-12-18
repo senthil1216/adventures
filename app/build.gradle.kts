@@ -26,6 +26,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     implementation("org.apache.commons:commons-collections4:4.1")
 
+    implementation("com.google.code.gson:gson:2.10")
+
 }
 
 application {
