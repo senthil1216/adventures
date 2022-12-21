@@ -1,154 +1,112 @@
 package adventures.aoc2022;
 
-import adventures.data.Point;
 import adventures.utils.Helpers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 public class Puzzle202217 {
-    private final String LINE = "####";
-    private final String CROSS = """
-            .#.
-            ###
-            .#.""";
-    private final String EL = """
-            ..#
-            ..#
-            ###""";
-    private final String ROD = """
-            #
-            #
-            #
-            #""";
-    private final String BLOCK = """
-            ##
-            ##""";
-    private final String[] ORDER = new String[]{LINE, CROSS, EL, ROD, BLOCK};
+
+    private static final int CHAMBER_LAYER = 0b100000001;
+    private static final int CHAMBER_FLOOR = 0b111111111;
+
+    private static final int[][] ROCKS = new int[][] {
+            { 0b000111100 },
+            { 0b000010000, 0b000111000, 0b000010000 },
+            { 0b000001000, 0b000001000, 0b000111000 },
+            { 0b000100000, 0b000100000, 0b000100000, 0b000100000 },
+            { 0b000110000, 0b000110000 },
+    };
 
     public static void main(String[] args) {
-        new Puzzle202217().part1();
-//        new Puzzle202217().part2();
+        var input = Helpers.loadFileAsString("202217.txt");
+
+        System.out.println("Part 1: " + solve(input, 2022));
+        System.out.println("Part 2: " + solve(input, 1000000000000L));
     }
 
-    public void part1() {
-        String data = Helpers.loadFileAsString("202217.txt");
-        int rockCount = 0;
-        Chamber chamber = new Chamber();
-        int incr = 0;
-        while (rockCount <= 2022) {
-            String rockStr = ORDER[rockCount % ORDER.length];
-            Rock r = new Rock(rockStr, 2, chamber.minY() - 4);
-            boolean isValid = true;
-            while (isValid) {
-                char dir = data.charAt(incr % data.length());
-                switch (dir) {
-                    case '>' -> r.moveRight(chamber);
-                    case '<' -> r.moveLeft(chamber);
+    private static long solve(String input, long maxRockCount) {
+        var chamber = new ArrayList<Integer>();
+        chamber.add(CHAMBER_FLOOR);
+
+        int height = 0;
+        int index = 0;
+
+        boolean cycleFound = false;
+        var heights = new HashMap<Integer, Integer>();
+        var rockCounts = new HashMap<Integer, Long>();
+        var towerTops = new HashMap<Integer, List<Integer>>();
+        long skippedHeight = 0;
+
+        long rockCount = 0;
+        while (rockCount < maxRockCount) {
+            int rockIndex = (int) (rockCount % ROCKS.length);
+
+            // We occasionally check if a cycle is found or not. If the same input index is seen the 3rd time when
+            // a rock of shape 0 begins to fall, then we compare the top layers of the tower to the previous state.
+            // If the layers generated between the 2nd and 3rd occurrence are the same as the layers between the
+            // 1st and 2nd occurrence, then we found a cycle.
+            if (!cycleFound && rockIndex == 0) {
+                if (heights.containsKey(index)) {
+                    int prevHeight = heights.get(index);
+                    var towerTop = chamber.subList(prevHeight + 1, height + 1);
+                    if (towerTop.equals(towerTops.get(index))) {
+                        cycleFound = true;
+                        long cycleRockCount = rockCount - rockCounts.get(index);
+                        long cycles = (maxRockCount - rockCount) / cycleRockCount;
+                        rockCount += cycles * cycleRockCount;
+                        skippedHeight = cycles * (height - prevHeight);
+                        continue;
+                    }
+                    towerTops.put(index, new ArrayList<>(towerTop));
                 }
-                isValid = r.canMoveDown(chamber);
-                if (!isValid) {
-                    chamber.merge(r);
-                }
-                incr++;
+                heights.put(index, height);
+                rockCounts.put(index, rockCount);
             }
+
+            int[] rock = ROCKS[rockIndex];
+            int rockTop = height + 3 + rock.length;
+            addLayers(chamber, rockTop);
+
+            for (; !hasCollision(chamber, rock, rockTop); rockTop--) {
+                boolean left = input.charAt(index) == '<';
+                index = (index + 1) % input.length();
+
+                int[] pushed = pushRock(rock, left);
+                rock = hasCollision(chamber, pushed, rockTop) ? rock : pushed;
+            }
+
+            addRock(chamber, rock, rockTop + 1);
+
+            while (chamber.get(height + 1) != CHAMBER_LAYER) {
+                height++;
+            }
+
             rockCount++;
         }
-        System.out.println(Math.abs(chamber.minY()));
+
+        return height + skippedHeight;
     }
 
-    public void part2() {
-    }
-
-    public class Chamber {
-        Map<Point, Character> map = new HashMap<>();
-
-        public Chamber() {
-
-        }
-
-        public int minY() {
-            return map.keySet().stream().mapToInt(Point::y).min().orElse(0);
-        }
-
-        public void merge(Rock r) {
-            map.putAll(r.getMap());
+    private static void addLayers(List<Integer> chamber, int rockTop) {
+        while (chamber.size() <= rockTop) {
+            chamber.add(CHAMBER_LAYER);
         }
     }
 
-    public class Rock {
-        Map<Point, Character> map = new HashMap<>();
+    private static int[] pushRock(int[] rock, boolean left) {
+        int[] pushed = rock.clone();
+        IntStream.range(0, pushed.length).forEach(i -> pushed[i] = left ? pushed[i] << 1 : pushed[i] >> 1);
+        return pushed;
+    }
 
-        public Rock(String line, int x, int y) {
-            List<String> curr = line.lines().toList();
-            for (int r = 0; r < curr.size(); r++) {
-                for (int c = 0; c < curr.get(r).length(); c++) {
-                    if (curr.get(r).charAt(c) == '#') {
-                        map.put(new Point(x + c, y + r - curr.size() + 1), '#');
-                    }
-                }
-            }
-        }
+    private static boolean hasCollision(List<Integer> chamber, int[] rock, int rockTop) {
+        return IntStream.range(0, rock.length).anyMatch(i -> (rock[i] & chamber.get(rockTop - i)) != 0);
+    }
 
-        public Map<Point, Character> getMap() {
-            return map;
-        }
-
-        public void moveLeft(Chamber ch) {
-            if (minX() > 0) {
-                Map<Point, Character> res = transform(-1, 0);
-                for (Point entry : ch.map.keySet()) {
-                    if (res.containsKey(entry)) {
-                        return;
-                    }
-                }
-                map = res;
-            }
-        }
-
-        public void moveRight(Chamber ch) {
-            if (maxX() < 6) {
-                Map<Point, Character> res = transform(1, 0);
-                for (Point entry : ch.map.keySet()) {
-                    if (res.containsKey(entry)) {
-                        return;
-                    }
-                }
-                map = res;
-            }
-        }
-
-        public boolean canMoveDown(Chamber ch) {
-            Map<Point, Character> result = transform(0, 1);
-            OptionalInt maxVal = result.keySet().stream().mapToInt(Point::y).max();
-            if (maxVal.isPresent() && maxVal.getAsInt() == 0) {
-                return false;
-            }
-            for (Point entry : ch.map.keySet()) {
-                if (result.containsKey(entry)) {
-                    return false;
-                }
-            }
-            map = result;
-            return true;
-        }
-
-        private int minX() {
-            return map.keySet().stream().mapToInt(Point::x).min().orElseThrow();
-        }
-
-        private int maxX() {
-            return map.keySet().stream().mapToInt(Point::x).max().orElseThrow();
-        }
-
-        public Map<Point, Character> transform(int xTrans, int yTrans) {
-            Map<Point, Character> result = new HashMap<>();
-            for (var e : map.entrySet()) {
-                result.put(new Point(e.getKey().x() + xTrans, e.getKey().y() + yTrans), e.getValue());
-            }
-            return result;
-        }
+    private static void addRock(List<Integer> chamber, int[] rock, int rockTop) {
+        IntStream.range(0, rock.length).forEach(i -> chamber.set(rockTop - i, chamber.get(rockTop - i) | rock[i]));
     }
 }
