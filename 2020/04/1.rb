@@ -3,7 +3,6 @@
 def check_valid_passport(keys)
   return true if keys.size == 8
   return keys.size == 7 && !keys.include?("cid")
-  return false
 end
 
 count = 0
