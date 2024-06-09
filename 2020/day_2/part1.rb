@@ -2,22 +2,10 @@
 
 valid_password_count = 0
 input = ARGF.each_line do |line|
-  rules = line.strip.split(" ")
-  rangeStr = rules[0]
-  password_char = rules[1][0]
-  password = rules[2]
-  count = 0
-  password.each_char do |ch|
-    if ch == password_char
-      count+=1
-    end
-  end
-  ranges = rangeStr.split("-").map(&:to_i)
-  min = ranges[0]
-  max = ranges[1]
-  # pp count, password_char, min, max
-  if count >= min && count <= max
-    valid_password_count += 1
-  end
+  rangeStr, char, password = line.strip.split(" ")
+  password_char = char[0].strip
+  count = password.count(password_char)
+  min, max = rangeStr.split("-").map(&:to_i)
+  valid_password_count += 1 if count >= min && count <= max
 end
-pp valid_password_count
+pp valid_password_count == 638
