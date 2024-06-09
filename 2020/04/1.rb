@@ -6,7 +6,6 @@ def check_valid_passport(keys)
   return false
 end
 
-
 count = 0
 ARGF.read.split("\n\n").each do |each_line|
   keys = []
