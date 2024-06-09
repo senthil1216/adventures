@@ -1,2 +1,0 @@
-# adventures
-Advent of Code
