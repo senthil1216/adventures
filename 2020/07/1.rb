@@ -29,7 +29,7 @@ def find_bags(key, bag)
 end
 
 count = 0
-bags.map do |key, values|
+bags.keys.each do |key|
   if find_bags(key, bags)
     count += 1
   end
