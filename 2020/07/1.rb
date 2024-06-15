@@ -5,8 +5,7 @@ require 'set'
 bags = {}
 
 ARGF.read.split("\n").each do |line|
-  line = line.gsub!(/bags contain \d{0,}/,",")
-  line = line.gsub!(/(?:bag)s?.?/, ",")
+  line = line.gsub!(/bags contain \d{0,}/,",").gsub!(/(?:bag)s?.?/, ",")
   line = line.split(",")
   key = line[0].strip!
   values = line[1..line.size-1]
@@ -18,12 +17,10 @@ ARGF.read.split("\n").each do |line|
 end
 
 def find_bags(key, bag)
-  return true if  bag[key].include?("shiny gold")
+  return true if bag[key].include?("shiny gold")
   bag[key].each do |s|
     next if !bag.has_key?(s)
-     if find_bags(s, bag)
-      return true
-    end
+    return true if find_bags(s, bag)
   end
   return false
 end
