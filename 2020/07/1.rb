@@ -16,23 +16,22 @@ ARGF.read.split("\n").each do |line|
   end
   bags[key] = s
 end
-def find_bags(key, bag, final_list)
+
+def find_bags(key, bag)
   return true if  bag[key].include?("shiny gold")
-  return true if final_list.include?(key)
   bag[key].each do |s|
-    if bag.has_key?(s) && find_bags(s, bag, final_list)
-      final_list.add(key)
-      final_list.add(s)
+    next if !bag.has_key?(s)
+     if find_bags(s, bag)
+      return true
     end
   end
   return false
 end
 
-final_list = Set.new
-# pp bags
-bags.map do |key, _|
-  find_bags(key, bags, final_list)
+count = 0
+bags.map do |key, values|
+  if find_bags(key, bags)
+    count += 1
+  end
 end
-
-puts final_list.size
-# 233
+puts count
