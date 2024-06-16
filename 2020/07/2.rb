@@ -9,12 +9,11 @@ ARGF.read.split("\n").each do |line|
   else
     splits = line.split(",")
     key = splits[0].strip!
-    contain = {}
-    splits[1..splits.size-1].each do |val|
+    contain = Hash[splits[1..splits.size-1].map do |val|
       contain_bag_val = /\d+/.match(val)[0].to_i
       contain_bag_name = val.gsub!(contain_bag_val.to_s, "").strip!
-      contain[contain_bag_name] = contain_bag_val
-    end
+      [contain_bag_name, contain_bag_val]
+    end]
     bags[key] = contain
   end
 end
