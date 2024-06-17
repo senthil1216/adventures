@@ -1,6 +1,5 @@
 #! /usr/bin/env ruby
 
-
 inst_set = []
 
 ARGF.read.split("\n").each do |curr_inst|
