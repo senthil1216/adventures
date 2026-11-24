@@ -1,39 +1,50 @@
+"""Secret Entrance."""
+
 # %%
+from collections.abc import Iterator
 from pathlib import Path
 
+DIAL_SIZE = 100
+START = 50
+
+
+def rotations(text: str) -> Iterator[int]:
+    for line in text.splitlines():
+        distance = int(line[1:])
+        yield -distance if line[0] == "L" else distance
+
+
 def part1(text: str) -> int:
-    values = text.split(",")
+    position = START
     count = 0
-    for v in values:
-        start, end = [int(x) for x in v.split("-")]
-        for num in range(start, end+1):
-            str_num = str(num)
-            str_len = len(str_num)
-            if str_num[:str_len//2] == str_num[str_len//2:]:
-                count += num
+    for rotation in rotations(text):
+        position = (position + rotation) % DIAL_SIZE
+        if position == 0:
+            count += 1
     return count
 
 
 def part2(text: str) -> int:
-    values = text.split(",")
+    position = START
     count = 0
-    invalids= set()
-    for v in values:
-        start, end = [int(x) for x in v.split("-")]
-        for num in range(start, end+1):
-            s = str(num)
-            str_len = len(s)
-            for n in range(1, (str_len//2)+1):
-                result = [s[i:i+n] for i in range(0, len(s), n)]
-                if all(item == result[0] for item in result):
-                    invalids.add(num)
-    count = sum(invalids)
+    for rotation in rotations(text):
+        full_turns, remaining = divmod(abs(rotation), DIAL_SIZE)
+        distance_to_zero = -position if rotation > 0 else position
+        # Starting at zero requires a full turn to click back onto it.
+        clicks_to_zero = distance_to_zero % DIAL_SIZE or DIAL_SIZE
+        count += full_turns + (remaining >= clicks_to_zero)
+        position = (position + rotation) % DIAL_SIZE
     return count
-
-if __name__ == "__main__":
-    text = Path(__file__).with_name("input").read_text(encoding="utf-8")
-    print(part1(text))
-    print(part2(text))
 
 
 # %%
+if __name__ == "__main__":
+    text = Path(__file__).with_name("input").read_text(encoding="utf-8")
+
+    answer1 = part1(text)
+    print(answer1)
+    assert answer1 == 1026, f"Expected 1026, got {answer1}"
+
+    answer2 = part2(text)
+    print(answer2)
+    assert answer2 == 5923, f"Expected 5923, got {answer2}"
